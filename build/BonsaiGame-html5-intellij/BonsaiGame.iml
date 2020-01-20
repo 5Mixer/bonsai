@@ -15,9 +15,9 @@
     <output url="file://$MODULE_DIR$/../html5" />
     <exclude-output />
     <content url="file://$MODULE_DIR$/../..">
-      <sourceFolder url="file://C:\Users\jorda\Projects\bonsai\Kha\Sources" isTestSource="false" />
-      <sourceFolder url="file://C:\Users\jorda\Projects\bonsai\Kha\Backends\HTML5" isTestSource="false" />
-      <sourceFolder url="file://C:\Users\jorda\Projects\bonsai\src" isTestSource="false" />
+      <sourceFolder url="file:///home/mixer/projects/bonsai/Kha/Sources" isTestSource="false" />
+      <sourceFolder url="file:///home/mixer/projects/bonsai/Kha/Backends/HTML5" isTestSource="false" />
+      <sourceFolder url="file:///home/mixer/projects/bonsai/src" isTestSource="false" />
 
     </content>
     

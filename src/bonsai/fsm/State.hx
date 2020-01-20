@@ -2,6 +2,7 @@ package bonsai.fsm;
 
 class State {
 	public function new () {
+
 	}
 	public function update(dt:Float) {
 
@@ -9,7 +10,7 @@ class State {
 	public function onLoad(payload) {
 
 	}
-	public funciton onLeave() {
+	public function onLeave() {
 
 	}
 }
