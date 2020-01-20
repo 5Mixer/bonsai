@@ -5,9 +5,11 @@ import kha.Framebuffer;
 import kha.Scheduler;
 import kha.System;
 
+import bonsai.scene.Scene;
+import bonsai.event.EventSystem;
+
 class Engine {
 	public var events:EventSystem;
-
 	public var currentScene:Scene;
 
 	public function new () {
