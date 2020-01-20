@@ -42,16 +42,24 @@ class Goblin extends Entity {
 	public var width:Float = 16;
 	public var height:Float = 16;
 	var spriteMap:SpriteMap;
+	var animation:AnimatedSprite;
 
 	override public function new (x, y) {
 		super();
 		this.position.x = x;
 		this.position.y = y;
-		this.spriteMap = new SpriteMap(kha.Assets.images.goblinRun, 16, 16);
+		this.animation = new AnimatedSprite(new SpriteMap(kha.Assets.images.goblinRun, 16, 16));
+		this.animation.registerAnimation("walk", {frames:[0,1,2,3,4,5]});
+		this.animation.play("walk");
 	}
 
 	override public function render (canvas:kha.graphics2.Graphics) {
-		this.spriteMap.render(canvas, this.position.x, this.position.y, 1);
+		// this.spriteMap.render(canvas, this.position.x, this.position.y, 1);
+		this.animation.render(canvas, this.position.x, this.position.y);
+	}
+
+	override public function update (dt){
+		this.animation.update(dt);
 	}
 }
 

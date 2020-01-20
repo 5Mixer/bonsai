@@ -11,6 +11,7 @@ import bonsai.event.EventSystem;
 class Engine {
 	public var events:EventSystem;
 	public var currentScene:Scene;
+	var time:Float;
 
 	public function new () {
 
@@ -27,7 +28,9 @@ class Engine {
 	}
 
 	function update(): Void {
-
+		var delta = Scheduler.time() - time;
+		this.currentScene.update(delta);
+		time = Scheduler.time();
 	}
 
 	function render(framebuffer: Framebuffer): Void {

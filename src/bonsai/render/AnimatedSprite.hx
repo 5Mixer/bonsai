@@ -10,7 +10,8 @@ class AnimatedSprite {
 	var frame:Int;
 	var spriteMap:SpriteMap;
 
-	var tickCounter = 0;
+	var lastFrameTime:Float = 0;
+	var frameTime = .1;
 
 	public function new (spriteMap:SpriteMap) {
 		this.spriteMap = spriteMap;
@@ -22,14 +23,15 @@ class AnimatedSprite {
 	public function play (identifier:String) {
 		playing = identifier;
 		frame = 0;
+		lastFrameTime = kha.Scheduler.time();
 	}
 	public function update (dt) {
-		tickerCounter++;
-		if (tickCounter > 99) {
-			tickerCounter = 0;
-			frame+= 1;
-			if (frame > animations.get(playing).length) - 1)
+		if (kha.Scheduler.time() > lastFrameTime + frameTime) {
+			lastFrameTime = kha.Scheduler.time();
+			frame += 1;
+			if (frame > animations.get(playing).frames.length - 1)
 				frame = 0;
+		}
 	}
 	public function render (canvas:kha.graphics2.Graphics, x, y) {
 		var currentAnimation = animations.get(playing);
