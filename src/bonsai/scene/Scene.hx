@@ -11,23 +11,23 @@ class Scene {
 		this.name = name;
 	}
 	public function add (entity:Entity, layer=0) {
-		if (this.layers[layer] == undefined)
+		if (this.layers[layer] == null)
 			this.layers[layer] = [];
 
 		this.layers[layer].push(entity);
 	}
-	public function remove (entity:Entity, layer=0) {
-		for (layer of this.layers)
-			layer[entity.layer].remove(entity);
+	public function remove (entity:Entity) {
+		for (layer in this.layers)
+			layer.remove(entity);
 	}
 	public function update (dt:Float) {
-		for (layer of layers)
+		for (layer in layers)
 			for (entity in layer)
 				entity.update(dt);
 	}
 	public function render (canvas) {
-		for (layer of layers)
+		for (layer in layers)
 			for (entity in layer)
-				entity.render(dt);
+				entity.render();
 	}
 }
