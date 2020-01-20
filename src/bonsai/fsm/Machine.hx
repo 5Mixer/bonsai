@@ -1,10 +1,5 @@
 package bonsai.fsm;
 
-interface State {
-	public function update(dt:Float);
-	onLoad(payload);
-	onLeave();
-}
 
 class Machine<MachineStateIdentifier> {
 	public var name:String;

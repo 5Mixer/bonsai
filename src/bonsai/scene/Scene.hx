@@ -7,7 +7,7 @@ class Scene {
 
 	public var name:String;
 
-	public function new (name:String) {
+	public function new (?name:String) {
 		this.name = name;
 	}
 	public function add (entity:Entity, layer=0) {
@@ -25,9 +25,9 @@ class Scene {
 			for (entity in layer)
 				entity.update(dt);
 	}
-	public function render (canvas) {
+	public function render (canvas:kha.graphics2.Graphics) {
 		for (layer in layers)
 			for (entity in layer)
-				entity.render();
+				entity.render(canvas);
 	}
 }

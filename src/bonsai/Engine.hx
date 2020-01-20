@@ -30,7 +30,10 @@ class Engine {
 	}
 
 	function render(framebuffer: Framebuffer): Void {
-
+		var g = framebuffer.g2;
+		g.begin();
+		this.currentScene.render(g);
+		g.end();
 	}
 
 }
