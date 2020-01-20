@@ -7,9 +7,12 @@ import bonsai.render.AnimatedSprite;
 import bonsai.render.SpriteMap;
 
 class Main {
+	public static var engine:Engine;
 	public static function main() {
-		var engine = new Engine();
-		engine.start();
+		engine = new Engine();
+		engine.start(onAssetLoad);
+	}
+	public static function onAssetLoad () {
 		var scene1 = new Scene("Scene 1");
 		engine.currentScene = new Level2();
 	}

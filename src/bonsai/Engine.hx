@@ -16,11 +16,12 @@ class Engine {
 
 	}
 
-	public function start (title:String="Bonsai Engine Game", width=800, height=600) {
+	public function start (title:String="Bonsai Engine Game", width=800, height=600, onReady) {
 		System.start({title: title, width: width, height: height}, function (_) {
 			Assets.loadEverything(function () {
 				Scheduler.addTimeTask(function () { update(); }, 0, 1 / 60);
 				System.notifyOnFrames(function (framebuffers) { render(framebuffers[0]); });
+				onReady();
 			});
 		});
 	}
