@@ -14,17 +14,17 @@ class AnimatedSprite<AnimationIdentifier> {
 		this.spriteMap = spriteMap;
 		animations = new Map<AnimationIdentifier, Animation>();
 	}
-	public function registerAnimation (identifier:AnimationIdentifier, frames:Animation) {
+	public function registerAnimation (identifier:AnimationIdentifier, animation:Animation) {
 		animations.set(identifier, animation);
 	}
 	public function play (identifier:AnimationIdentifier) {
 		playing = identifier;
 		frame = 0;
 	}
-	public function render (canvas:kha.graphics2.Graphics) {
+	public function render (canvas:kha.graphics2.Graphics, x, y) {
 		var currentAnimation = animations.get(playing);
 		var currentFrame = currentAnimation.frames[frame];
-		spriteMap.render(canvas, currentFrame);
+		spriteMap.render(canvas, x, y, currentFrame);
 
 	}
 }
