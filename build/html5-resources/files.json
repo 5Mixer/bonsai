@@ -1,6 +1,28 @@
 {
 	"files": [
 		{
+			"name": "goblinRun",
+			"files": [
+				"goblinRun.png"
+			],
+			"file_sizes": [
+				422
+			],
+			"type": "image",
+			"original_width": 96,
+			"original_height": 16
+		},
+		{
+			"name": "goblinRun_pyxel",
+			"files": [
+				"goblinRun.pyxel"
+			],
+			"file_sizes": [
+				1080
+			],
+			"type": "blob"
+		},
+		{
 			"name": "painter_colored_frag",
 			"files": [
 				"painter-colored.frag.essl",
