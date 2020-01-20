@@ -19,16 +19,18 @@ class Player extends Entity {
 	public var height:Float;
 
 	override public function new (x,y,width,height) {
-		super("Player");
+		super();
 		this.position.x = x;
 		this.position.y = y;
 		this.width = width;
 		this.height = height;
 	}
 
-	override public function render(){
+	override public function render(canvas:kha.graphics2.Graphics){
+		canvas.color = kha.Color.Green;
+		canvas.fillRect(this.position.x, this.position.y, this.width, this.height);
 		trace("Rendered Player");
-		//render a blue square with the dimentions of the player
+		super.render(canvas);
 	}
 }
 

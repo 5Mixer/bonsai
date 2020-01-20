@@ -3,7 +3,7 @@ package bonsai.scene;
 import bonsai.entity.Entity;
 
 class Scene {
-	var layers:Array<Array<Entity>>;
+	var layers:Array<Array<Entity>> = [];
 
 	public var name:String;
 
