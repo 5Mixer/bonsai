@@ -1,0 +1,13 @@
+{
+  "name": "bonsai",
+  "url" : "https://github.com/5Mixer/bonsai/",
+  "license": "MIT",
+  "tags": [],
+  "description": "A Kha game engine",
+  "version": "0.1.0",
+  "classPath": "src/",
+  "releasenote": "Initial release, everything is working correctly.",
+  "contributors": ["5Mixer","Lozzadawg"],
+  "dependencies": {
+  }
+}
