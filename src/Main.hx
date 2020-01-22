@@ -18,7 +18,7 @@ class Main {
 	}
 	public static function onAssetLoad () {
 		var scene1 = new Scene("Scene");
-		engine.currentScene = new Level1();
+		engine.currentScene = new Level2();
 	}
 }
 
@@ -52,14 +52,14 @@ class Goblin extends Entity {
 		super();
 		this.position.x = x;
 		this.position.y = y;
-		// this.animation = new AnimatedSprite(new SpriteMap(kha.Assets.images.goblinRun, 16, 16));
-		// this.animation.registerAnimation("walk", {frames:[0,1,2,3,4,5]});
+		this.animation = new AnimatedSprite(new SpriteMap(kha.Assets.images.goblinRun, 16, 16));
+		this.animation.registerAnimation("walk", {frames:[0,1,2,3,4,5]});
 		this.animation.play("walk");
 	}
 
 	override public function render (canvas:kha.graphics2.Graphics) {
 		// this.spriteMap.render(canvas, this.position.x, this.position.y, 1);
-		// this.animation.render(canvas, this.position.x, this.position.y);
+		this.animation.render(canvas, this.position.x, this.position.y);
 	}
 
 	override public function update (dt){
