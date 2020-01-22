@@ -6,10 +6,14 @@ import bonsai.entity.Entity;
 import bonsai.render.AnimatedSprite;
 import bonsai.render.SpriteMap;
 
+enum GameEvents {
+	PlayerEat(food:String);
+}
+
 class Main {
-	public static var engine:Engine;
+	public static var engine:Engine<GameEvents>;
 	public static function main() {
-		engine = new Engine();
+		engine = new Engine<GameEvents>();
 		engine.start(onAssetLoad);
 	}
 	public static function onAssetLoad () {
@@ -32,7 +36,7 @@ class Player extends Entity {
 	}
 
 	override public function render (canvas:kha.graphics2.Graphics) {
-		canvas.color = kha.Color.Green;
+		canvas.color = kha.Color.White;
 		canvas.fillRect(this.position.x, this.position.y, this.width, this.height);
 	}
 }

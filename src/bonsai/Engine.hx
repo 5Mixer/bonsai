@@ -8,8 +8,8 @@ import kha.System;
 import bonsai.scene.Scene;
 import bonsai.event.EventSystem;
 
-class Engine {
-	public var events:EventSystem;
+class Engine<GameEventType> {
+	public var events:EventSystem<GameEventType>;
 	public var currentScene:Scene;
 	var time:Float;
 

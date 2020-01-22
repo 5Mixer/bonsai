@@ -1,6 +1,10 @@
 package bonsai.event;
 
-class EventSystem {
+enum BonsaiEvent {
+
+}
+
+class EventSystem<EventType> {
 	public function new () {
 
 
