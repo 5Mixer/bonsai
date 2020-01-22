@@ -5,6 +5,7 @@ import bonsai.scene.Scene;
 import bonsai.entity.Entity;
 import bonsai.render.AnimatedSprite;
 import bonsai.render.SpriteMap;
+import bonsai.render.Transformation;
 
 enum GameEvents {
 	PlayerEat(food:String);
@@ -47,6 +48,7 @@ class Goblin extends Entity {
 	public var height:Float = 16;
 	var spriteMap:SpriteMap;
 	var animation:AnimatedSprite;
+	var transformation:Transformation;
 
 	override public function new (x, y) {
 		super();
@@ -55,11 +57,15 @@ class Goblin extends Entity {
 		this.animation = new AnimatedSprite(new SpriteMap(kha.Assets.images.goblinRun, 16, 16));
 		this.animation.registerAnimation("walk", {frames:[0,1,2,3,4,5]});
 		this.animation.play("walk");
+		this.transformation = new Transformation();
+		this.transformation.rotation=Math.PI/8;
 	}
 
-	override public function render (canvas:kha.graphics2.Graphics) {
+	override public function render (graphics:kha.graphics2.Graphics) {
+		this.transformation.apply(graphics);
 		// this.spriteMap.render(canvas, this.position.x, this.position.y, 1);
-		this.animation.render(canvas, this.position.x, this.position.y);
+		this.animation.render(graphics, this.position.x, this.position.y);
+		this.transformation.finish(graphics);	
 	}
 
 	override public function update (dt){
@@ -76,8 +82,8 @@ class Level1 extends Scene {
 class Level2 extends Scene {
 	override public function new () {
 		super("Level2");
-		add(new Goblin(20,20));
-		add(new Player(200,50,30,60));
+		add(new Goblin(200,200));
+		// add(new Player(200,50,30,60));
 	}
 }
 class StartMenu extends Scene {

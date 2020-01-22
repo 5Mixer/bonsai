@@ -129,7 +129,7 @@ bonsai_entity_Entity.prototype = {
 	position: null
 	,active: null
 	,visible: null
-	,render: function(canvas) {
+	,render: function(graphics) {
 	}
 	,update: function(dt) {
 	}
@@ -163,6 +163,8 @@ var Goblin = function(x,y) {
 	this.animation = new bonsai_render_AnimatedSprite(new bonsai_render_SpriteMap(kha_Assets.images.goblinRun,16,16));
 	this.animation.registerAnimation("walk",{ frames : [0,1,2,3,4,5]});
 	this.animation.play("walk");
+	this.transformation = new bonsai_render_Transformation();
+	this.transformation.rotation = Math.PI / 8;
 };
 $hxClasses["Goblin"] = Goblin;
 Goblin.__name__ = true;
@@ -172,8 +174,11 @@ Goblin.prototype = $extend(bonsai_entity_Entity.prototype,{
 	,height: null
 	,spriteMap: null
 	,animation: null
-	,render: function(canvas) {
-		this.animation.render(canvas,this.position.x,this.position.y);
+	,transformation: null
+	,render: function(graphics) {
+		this.transformation.apply(graphics);
+		this.animation.render(graphics,this.position.x,this.position.y);
+		this.transformation.finish(graphics);
 	}
 	,update: function(dt) {
 		this.animation.update(dt);
@@ -221,7 +226,7 @@ bonsai_scene_Scene.prototype = {
 			}
 		}
 	}
-	,render: function(canvas) {
+	,render: function(graphics) {
 		var _g = 0;
 		var _g1 = this.layers;
 		while(_g < _g1.length) {
@@ -231,7 +236,7 @@ bonsai_scene_Scene.prototype = {
 			while(_g2 < layer.length) {
 				var entity = layer[_g2];
 				++_g2;
-				entity.render(canvas);
+				entity.render(graphics);
 			}
 		}
 	}
@@ -249,8 +254,7 @@ Level1.prototype = $extend(bonsai_scene_Scene.prototype,{
 });
 var Level2 = function() {
 	bonsai_scene_Scene.call(this,"Level2");
-	this.add(new Goblin(20,20));
-	this.add(new Player(200,50,30,60));
+	this.add(new Goblin(200,200));
 };
 $hxClasses["Level2"] = Level2;
 Level2.__name__ = true;
@@ -471,12 +475,12 @@ bonsai_render_AnimatedSprite.prototype = {
 			}
 		}
 	}
-	,render: function(canvas,x,y) {
+	,render: function(graphics,x,y) {
 		var key = this.playing;
 		var _this = this.animations;
 		var currentAnimation = __map_reserved[key] != null ? _this.getReserved(key) : _this.h[key];
 		var currentFrame = currentAnimation.frames[this.frame];
-		this.spriteMap.render(canvas,x,y,currentFrame);
+		this.spriteMap.render(graphics,x,y,currentFrame);
 	}
 	,__class__: bonsai_render_AnimatedSprite
 };
@@ -494,12 +498,70 @@ bonsai_render_SpriteMap.prototype = {
 	image: null
 	,gridWidth: null
 	,gridHeight: null
-	,render: function(canvas,x,y,index) {
+	,render: function(graphics,x,y,index) {
 		var sx = index * this.gridWidth % this.image.get_width();
 		var sy = Math.floor(index / this.gridHeight) * this.gridHeight;
-		canvas.drawSubImage(this.image,x,y,sx,sy,this.gridWidth,this.gridHeight);
+		graphics.drawSubImage(this.image,x,y,sx,sy,this.gridWidth,this.gridHeight);
 	}
 	,__class__: bonsai_render_SpriteMap
+};
+var bonsai_render_Transformation = function() {
+	this.offset = new kha_math_Vector2();
+};
+$hxClasses["bonsai.render.Transformation"] = bonsai_render_Transformation;
+bonsai_render_Transformation.__name__ = true;
+bonsai_render_Transformation.prototype = {
+	offset: null
+	,rotation: null
+	,apply: function(graphics) {
+		var mtran__00 = 1;
+		var mtran__10 = 0;
+		var mtran__20 = this.offset.x;
+		var mtran__01 = 0;
+		var mtran__11 = 1;
+		var mtran__21 = this.offset.y;
+		var mtran__02 = 0;
+		var mtran__12 = 0;
+		var mtran__22 = 1;
+		var alpha = this.rotation;
+		var mrot__00 = Math.cos(alpha);
+		var mrot__10 = -Math.sin(alpha);
+		var mrot__20 = 0;
+		var mrot__01 = Math.sin(alpha);
+		var mrot__11 = Math.cos(alpha);
+		var mrot__21 = 0;
+		var mrot__02 = 0;
+		var mrot__12 = 0;
+		var mrot__22 = 1;
+		var trans__00 = mtran__00 * mrot__00 + mtran__10 * mrot__01 + mtran__20 * mrot__02;
+		var trans__10 = mtran__00 * mrot__10 + mtran__10 * mrot__11 + mtran__20 * mrot__12;
+		var trans__20 = mtran__00 * mrot__20 + mtran__10 * mrot__21 + mtran__20 * mrot__22;
+		var trans__01 = mtran__01 * mrot__00 + mtran__11 * mrot__01 + mtran__21 * mrot__02;
+		var trans__11 = mtran__01 * mrot__10 + mtran__11 * mrot__11 + mtran__21 * mrot__12;
+		var trans__21 = mtran__01 * mrot__20 + mtran__11 * mrot__21 + mtran__21 * mrot__22;
+		var trans__02 = mtran__02 * mrot__00 + mtran__12 * mrot__01 + mtran__22 * mrot__02;
+		var trans__12 = mtran__02 * mrot__10 + mtran__12 * mrot__11 + mtran__22 * mrot__12;
+		var trans__22 = mtran__02 * mrot__20 + mtran__12 * mrot__21 + mtran__22 * mrot__22;
+		graphics.transformationIndex++;
+		if(graphics.transformationIndex == graphics.transformations.length) {
+			graphics.transformations.push(new kha_math_FastMatrix3(1,0,0,0,1,0,0,0,1));
+		}
+		var _this = graphics.transformations[graphics.transformationIndex];
+		_this._00 = trans__00;
+		_this._10 = trans__10;
+		_this._20 = trans__20;
+		_this._01 = trans__01;
+		_this._11 = trans__11;
+		_this._21 = trans__21;
+		_this._02 = trans__02;
+		_this._12 = trans__12;
+		_this._22 = trans__22;
+		graphics.setTransformation(graphics.transformations[graphics.transformationIndex]);
+	}
+	,finish: function(graphics) {
+		graphics.popTransformation();
+	}
+	,__class__: bonsai_render_Transformation
 };
 var haxe_IMap = function() { };
 $hxClasses["haxe.IMap"] = haxe_IMap;
