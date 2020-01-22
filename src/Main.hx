@@ -17,7 +17,7 @@ class Main {
 		engine.start(onAssetLoad);
 	}
 	public static function onAssetLoad () {
-		var scene1 = new Scene("Scene 1");
+		var scene1 = new Scene("Scene");
 		engine.currentScene = new Level2();
 	}
 }
