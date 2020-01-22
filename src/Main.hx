@@ -44,8 +44,8 @@ class Player extends Entity {
 
 class Goblin extends Entity {
 
-	public var width:Float = 16;
-	public var height:Float = 16;
+	public var width:Int = 16;
+	public var height:Int = 16;
 	var spriteMap:SpriteMap;
 	var animation:AnimatedSprite;
 	var transformation:Transformation;
@@ -54,17 +54,20 @@ class Goblin extends Entity {
 		super();
 		this.position.x = x;
 		this.position.y = y;
-		this.animation = new AnimatedSprite(new SpriteMap(kha.Assets.images.goblinRun, 16, 16));
+		this.animation = new AnimatedSprite(new SpriteMap(kha.Assets.images.goblinRun, this.width, this.height));
 		this.animation.registerAnimation("walk", {frames:[0,1,2,3,4,5]});
 		this.animation.play("walk");
 		this.transformation = new Transformation();
-		this.transformation.rotation=Math.PI/8;
+		// this.transformation.rotation = Math.PI/8;
+		this.transformation.offset = this.position.mult(-1);
+		this.transformation.origin =  new kha.math.Vector2(this.width/2, this.height/2);
+		this.transformation.scale = new kha.math.Vector2(8,8);
 	}
 
 	override public function render (graphics:kha.graphics2.Graphics) {
 		this.transformation.apply(graphics);
 		// this.spriteMap.render(canvas, this.position.x, this.position.y, 1);
-		this.animation.render(graphics, this.position.x, this.position.y);
+		this.animation.render(graphics, 0, 0);
 		this.transformation.finish(graphics);	
 	}
 
@@ -76,14 +79,14 @@ class Goblin extends Entity {
 class Level1 extends Scene {
 	override public function new () {
 		super("Level1");
-		add(new Player(50,50,30,60));
+		add(new Player(300, 100, 30, 60));
 	}
 }
 class Level2 extends Scene {
 	override public function new () {
 		super("Level2");
-		add(new Goblin(200,200));
-		// add(new Player(200,50,30,60));
+		add(new Goblin(20, 50));
+		// add(new Player(200, 50, 30, 60));
 	}
 }
 class StartMenu extends Scene {

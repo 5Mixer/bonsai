@@ -15,7 +15,7 @@ class Transformation {
 	}
 
 	public function apply (graphics:kha.graphics2.Graphics) {
-		if (rotation != 0) graphics.pushTransformation(graphics.transformation.multmat(FastMatrix3.translation(offset.x + origin.x, offset.y + origin.y)).multmat(FastMatrix3.rotation(rotation).multmat(FastMatrix3.scale(scale.x,scale.y))).multmat(FastMatrix3.translation(-offset.x - origin.x, -offset.y - origin.y)));
+		graphics.pushTransformation(graphics.transformation.multmat(FastMatrix3.translation(offset.x + origin.x, offset.y + origin.y)).multmat(FastMatrix3.rotation(rotation).multmat(FastMatrix3.scale(scale.x,scale.y))).multmat(FastMatrix3.translation(-offset.x - origin.x, -offset.y - origin.y)));
 
 	}
 
