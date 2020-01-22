@@ -25,9 +25,9 @@ class Scene {
 			for (entity in layer)
 				entity.update(dt);
 	}
-	public function render (canvas:kha.graphics2.Graphics) {
+	public function render (graphics:kha.graphics2.Graphics) {
 		for (layer in layers)
 			for (entity in layer)
-				entity.render(canvas);
+				entity.render(graphics);
 	}
 }

@@ -11,7 +11,7 @@ class Entity {
 	public function new () {
 		position = new kha.math.Vector2();
 	}
-	public function render (canvas:kha.graphics2.Graphics) {
+	public function render (graphics:kha.graphics2.Graphics) {
 
 	}
 	public function update (dt) {

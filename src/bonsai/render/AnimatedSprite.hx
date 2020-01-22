@@ -33,9 +33,9 @@ class AnimatedSprite {
 				frame = 0;
 		}
 	}
-	public function render (canvas:kha.graphics2.Graphics, x, y) {
+	public function render (graphics:kha.graphics2.Graphics, x, y) {
 		var currentAnimation = animations.get(playing);
 		var currentFrame = currentAnimation.frames[frame];
-		spriteMap.render(canvas, x, y, currentFrame);
+		spriteMap.render(graphics, x, y, currentFrame);
 	}
 }

@@ -14,9 +14,9 @@ class SpriteMap {
 			trace("Warning: SpriteMap created where image width is not a multiple of gridWidth");
 	}
 
-	public function render (canvas:kha.graphics2.Graphics, x, y, index) {
+	public function render (graphics:kha.graphics2.Graphics, x, y, index) {
 		var sx = (index * this.gridWidth) % this.image.width;
 		var sy = Math.floor(index / this.gridHeight) * this.gridHeight;
-		canvas.drawSubImage(this.image, x, y, sx, sy, gridWidth, gridHeight); 
+		graphics.drawSubImage(this.image, x, y, sx, sy, gridWidth, gridHeight); 
 	}
 }
