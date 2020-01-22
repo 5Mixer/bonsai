@@ -1,6 +1,6 @@
--cp C:\Projects\bonsai\kha\Sources
--cp C:\Projects\bonsai\kha\Backends\HTML5
--cp C:\Projects\bonsai\src
+-cp /home/mixer/projects/bonsai/Kha/Sources
+-cp /home/mixer/projects/bonsai/Kha/Backends/HTML5
+-cp /home/mixer/projects/bonsai/src
 -D hxcpp_smart_strings
 -D sys_g1
 -D sys_g2
@@ -24,5 +24,5 @@
 -D kha
 -D kha_version=1810
 -D kha_project_name=BonsaiGame
--js html5\kha.js
+-js html5/kha.js
 -main Main

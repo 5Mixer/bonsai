@@ -5,16 +5,18 @@ import kha.math.FastMatrix3;
 class Transformation {
 	public var offset:kha.math.Vector2;
 	public var rotation:Float;
+	public var scale:kha.math.Vector2;
+	public var origin:kha.math.Vector2;
 
 	public function new () {
 		offset = new kha.math.Vector2();
+		scale = new kha.math.Vector2();
+		origin = new kha.math.Vector2();
 	}
 
 	public function apply (graphics:kha.graphics2.Graphics) {
-		var mtran = FastMatrix3.translation(offset.x, offset.y);
-		var mrot = FastMatrix3.rotation(rotation);
+		if (rotation != 0) graphics.pushTransformation(graphics.transformation.multmat(FastMatrix3.translation(offset.x + origin.x, offset.y + origin.y)).multmat(FastMatrix3.rotation(rotation).multmat(FastMatrix3.scale(scale.x,scale.y))).multmat(FastMatrix3.translation(-offset.x - origin.x, -offset.y - origin.y)));
 
-		graphics.pushTransformation(mtran.multmat(mrot));
 	}
 
 	public function finish (graphics:kha.graphics2.Graphics) {
