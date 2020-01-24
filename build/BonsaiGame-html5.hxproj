@@ -4,7 +4,7 @@
 	<output>
 		<movie outputType="Application" />
 		<movie input="" />
-		<movie path="html5\kha.js" />
+		<movie path="html5/kha.js" />
 		<movie fps="30" />
 		<movie width="800" />
 		<movie height="600" />
@@ -12,13 +12,15 @@
 		<movie minorVersion="0" />
 		<movie platform="JavaScript" />
 		<movie background="#ffffff" />
-		<movie preferredSDK="..\kha\Tools\haxe" />
+		<movie preferredSDK="../Kha/Tools/haxe" />
 	</output>
 	<!-- Other classes to be compiled into your SWF -->
 	<classpaths>
-		<class path="..\kha\Sources" />
-		<class path="..\kha\Backends\HTML5" />
-		<class path="..\src" />
+		<class path="../Kha/Sources" />
+		<class path="../Kha/Backends/HTML5" />
+		<class path="../src" />
+		<class path="../Libraries/hotml/Sources" />
+		<class path="../Libraries/hotml" />
 	</classpaths>
 	<!-- Build options -->
 	<build>
@@ -27,7 +29,7 @@
 		<option noInlineOnDebug="False" />
 		<option mainClass="Main" />
 		<option enabledebug="False" />
-		<option additional="-D hxcpp_smart_strings&#xA;-D sys_g1&#xA;-D sys_g2&#xA;-D sys_g3&#xA;-D sys_a1&#xA;-D sys_a2&#xA;-D kha_js&#xA;-D kha_g1&#xA;-D kha_g2&#xA;-D kha_g3&#xA;-D kha_a1&#xA;-D kha_a2&#xA;-D canvas_id=khanvas&#xA;-D script_name=kha&#xA;-D sys_g4&#xA;-D kha_g4&#xA;-D kha_webgl&#xA;-D sys_html5&#xA;-D kha_html5&#xA;-D kha_html5_js&#xA;-D sys_html5&#xA;-D kha_html5&#xA;-D kha_html5_js&#xA;-D kha&#xA;-D kha_version=1810&#xA;-D kha_project_name=BonsaiGame&#xA;-D kha_output=&quot;C:\Projects\bonsai\build\html5\kha.js&quot;&#xA;" />
+		<option additional="-D hxcpp_smart_strings&#xA;-D hotml&#xA;-D js_classic&#xA;-D sys_g1&#xA;-D sys_g2&#xA;-D sys_g3&#xA;-D sys_a1&#xA;-D sys_a2&#xA;-D kha_js&#xA;-D kha_g1&#xA;-D kha_g2&#xA;-D kha_g3&#xA;-D kha_a1&#xA;-D kha_a2&#xA;-D canvas_id=khanvas&#xA;-D script_name=kha&#xA;-D sys_g4&#xA;-D kha_g4&#xA;-D kha_webgl&#xA;-D sys_html5&#xA;-D kha_html5&#xA;-D kha_html5_js&#xA;-D sys_html5&#xA;-D kha_html5&#xA;-D kha_html5_js&#xA;-D kha&#xA;-D kha_version=1810&#xA;-D kha_project_name=BonsaiGame&#xA;-D kha_output=&quot;/home/mixer/projects/bonsai/build/html5/kha.js&quot;&#xA;" />
 	</build>
 	<!-- haxelib libraries -->
 	<haxelib>
@@ -49,7 +51,7 @@
 	<options>
 		<option showHiddenPaths="False" />
 		<option testMovie="Webserver" />
-		<option testMovieCommand="html5\index.html" />
+		<option testMovieCommand="html5/index.html" />
 	</options>
 	<!-- Plugin storage -->
 	<storage />

@@ -14,6 +14,8 @@ enum GameEvents {
 class Main {
 	public static var engine:Engine<GameEvents>;
 	public static function main() {
+		#if hotml new hotml.client.Client(); #end
+
 		engine = new Engine<GameEvents>();
 		engine.start(onAssetLoad);
 	}
@@ -67,8 +69,9 @@ class Goblin extends Entity {
 	override public function render (graphics:kha.graphics2.Graphics) {
 		this.transformation.apply(graphics);
 		// this.spriteMap.render(canvas, this.position.x, this.position.y, 1);
+		this.transformation.offset = this.position.mult(-1);
 		this.animation.render(graphics, 0, 0);
-		this.transformation.finish(graphics);	
+		this.transformation.finish(graphics);
 	}
 
 	override public function update (dt){

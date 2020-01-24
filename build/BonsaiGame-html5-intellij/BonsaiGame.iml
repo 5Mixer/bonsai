@@ -15,10 +15,14 @@
     <output url="file://$MODULE_DIR$/../html5" />
     <exclude-output />
     <content url="file://$MODULE_DIR$/../..">
-      <sourceFolder url="file://C:\Projects\bonsai\kha\Sources" isTestSource="false" />
-      <sourceFolder url="file://C:\Projects\bonsai\kha\Backends\HTML5" isTestSource="false" />
-      <sourceFolder url="file://C:\Projects\bonsai\src" isTestSource="false" />
+      <sourceFolder url="file:///home/mixer/projects/bonsai/Kha/Sources" isTestSource="false" />
+      <sourceFolder url="file:///home/mixer/projects/bonsai/Kha/Backends/HTML5" isTestSource="false" />
+      <sourceFolder url="file:///home/mixer/projects/bonsai/src" isTestSource="false" />
+      <sourceFolder url="file:///home/mixer/projects/bonsai/Libraries/hotml/Sources" isTestSource="false" />
 
+    </content>
+    <content url="file://Libraries/hotml">
+      <sourceFolder url="file:///home/mixer/projects/bonsai/Libraries/hotml" isTestSource="false" />
     </content>
     
     <orderEntry type="jdk" jdkName="Haxe 3.2.0" jdkType="Haxe toolkit" />
