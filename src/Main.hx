@@ -56,7 +56,7 @@ class Goblin extends Entity {
 		super();
 		this.position.x = x;
 		this.position.y = y;
-		this.animation = new AnimatedSprite(new SpriteMap(kha.Assets.images.goblinRun, this.width, this.height));
+		this.animation = new AnimatedSprite(new SpriteMap(kha.Assets.images.goblinRunSheet, this.width, this.height));
 		this.animation.registerAnimation("walk", {frames:[0,1,2,3,4,5]});
 		this.animation.play("walk");
 		this.transformation = new Transformation();

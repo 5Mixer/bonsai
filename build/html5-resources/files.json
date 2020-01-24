@@ -1,9 +1,9 @@
 {
 	"files": [
 		{
-			"name": "goblinRun",
+			"name": "goblinRunSheet",
 			"files": [
-				"goblinRun.png"
+				"goblinRunSheet.png"
 			],
 			"file_sizes": [
 				422
@@ -13,12 +13,12 @@
 			"original_height": 16
 		},
 		{
-			"name": "goblinRun_pyxel",
+			"name": "goblinRun_aseprite",
 			"files": [
-				"goblinRun.pyxel"
+				"goblinRun.aseprite"
 			],
 			"file_sizes": [
-				1080
+				1220
 			],
 			"type": "blob"
 		},
