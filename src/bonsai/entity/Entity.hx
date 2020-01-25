@@ -1,8 +1,5 @@
 package bonsai.entity;
 
-//import kha.math.Vectohhh2;
-
-
 class Entity {
 	var position:kha.math.Vector2;
 	var active = true;
