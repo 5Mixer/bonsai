@@ -56,20 +56,26 @@ class Goblin extends Entity {
 		super();
 		this.position.x = x;
 		this.position.y = y;
-		this.animation = new AnimatedSprite(new SpriteMap(kha.Assets.images.goblinRun, this.width, this.height));
+		this.animation = new AnimatedSprite(new SpriteMap(kha.Assets.images.goblinRunSheet, this.width, this.height));
 		this.animation.registerAnimation("walk", {frames:[0,1,2,3,4,5]});
 		this.animation.play("walk");
 		this.transformation = new Transformation();
-		// this.transformation.rotation = Math.PI/8;
-		this.transformation.offset = this.position.mult(-1);
-		this.transformation.origin =  new kha.math.Vector2(this.width/2, this.height/2);
-		this.transformation.scale = new kha.math.Vector2(8,8);
 	}
 
 	override public function render (graphics:kha.graphics2.Graphics) {
+		this.transformation.scale = new kha.math.Vector2(1, 1);
+		this.transformation.rotation += 0.04;//= -Math.PI*(3/2);
+	
+		// this.position.x=100;
+		// this.position.x=100;
+		// this.transformation.offset = this.position.mult(-1);
+		// this.transformation.offset.x = this.position.x;
+		// this.transformation.offset.y = this.position.y;
+		this.transformation.offset = new kha.math.Vector2(8, 8);
+		this.transformation.origin = new kha.math.Vector2(0, 0);
+
 		this.transformation.apply(graphics);
 		// this.spriteMap.render(canvas, this.position.x, this.position.y, 1);
-		this.transformation.offset = this.position.mult(-1);
 		this.animation.render(graphics, 0, 0);
 		this.transformation.finish(graphics);
 	}
@@ -88,7 +94,8 @@ class Level1 extends Scene {
 class Level2 extends Scene {
 	override public function new () {
 		super("Level2");
-		add(new Goblin(20, 50));
+		add(new Player(200, 200, 1, 1));
+		add(new Goblin(200, 200));
 		// add(new Player(200, 50, 30, 60));
 	}
 }
