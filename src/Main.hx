@@ -65,17 +65,13 @@ class Goblin extends Entity {
 
 	override public function render (graphics:kha.graphics2.Graphics) {
 		this.transformation.offset = new kha.math.Vector2(this.position.x, this.position.y);
-		this.transformation.scale = new kha.math.Vector2(1, 1);
-		// this.transformation.rotation = -Math.PI*(1/4);
+		this.transformation.scale = new kha.math.Vector2(8, 8);
 		// this.transformation.rotation -= 0.08;
-		//Rotate around own axis
 		this.transformation.origin = new kha.math.Vector2(this.width/2, this.height);
 
 		this.transformation.apply(graphics);
-		graphics.fillRect(0, 0, this.width, this.height);
+		// graphics.fillRect(0, 0, this.width, this.height);
 		this.animation.render(graphics, 0,0);
-		//Render animated sprite
-		//Render static sprite
 		// this.spriteMap.render(canvas, this.position.x, this.position.y, 1);
 		this.transformation.finish(graphics);
 	}
@@ -89,10 +85,6 @@ class Level1 extends Scene {
 	override public function new () {
 		super("Level1");
 		add(new Goblin(200, 200));
-		add(new Player(200, 200, 2, 2));
-		add(new Player(250, 250, 2, 2));
-		add(new Player(200, 250, 2, 2));
-		add(new Player(250, 200, 2, 2));
 	}
 }
 class Level2 extends Scene {
