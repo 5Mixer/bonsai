@@ -21,7 +21,7 @@ class Main {
 	}
 	public static function onAssetLoad () {
 		var scene1 = new Scene("Scene");
-		engine.currentScene = new Level2();
+		engine.currentScene = new Level1();
 	}
 }
 
@@ -56,27 +56,27 @@ class Goblin extends Entity {
 		super();
 		this.position.x = x;
 		this.position.y = y;
-		this.animation = new AnimatedSprite(new SpriteMap(kha.Assets.images.goblinRunSheet, this.width, this.height));
-		this.animation.registerAnimation("walk", {frames:[0,1,2,3,4,5]});
+		this.spriteMap = new SpriteMap(kha.Assets.images.goblinRunSheet, this.width, this.height);
+		this.animation = new AnimatedSprite(this.spriteMap);
+		this.animation.registerAnimation("walk", {frames:[0,1,2,3,4,5 ]});
 		this.animation.play("walk");
 		this.transformation = new Transformation();
 	}
 
 	override public function render (graphics:kha.graphics2.Graphics) {
+		this.transformation.offset = new kha.math.Vector2(this.position.x, this.position.y);
 		this.transformation.scale = new kha.math.Vector2(1, 1);
-		this.transformation.rotation += 0.04;//= -Math.PI*(3/2);
-	
-		// this.position.x=100;
-		// this.position.x=100;
-		// this.transformation.offset = this.position.mult(-1);
-		// this.transformation.offset.x = this.position.x;
-		// this.transformation.offset.y = this.position.y;
-		this.transformation.offset = new kha.math.Vector2(8, 8);
-		this.transformation.origin = new kha.math.Vector2(0, 0);
+		// this.transformation.rotation = -Math.PI*(1/4);
+		// this.transformation.rotation -= 0.08;
+		//Rotate around own axis
+		this.transformation.origin = new kha.math.Vector2(this.width/2, this.height);
 
 		this.transformation.apply(graphics);
+		graphics.fillRect(0, 0, this.width, this.height);
+		this.animation.render(graphics, 0,0);
+		//Render animated sprite
+		//Render static sprite
 		// this.spriteMap.render(canvas, this.position.x, this.position.y, 1);
-		this.animation.render(graphics, 0, 0);
 		this.transformation.finish(graphics);
 	}
 
@@ -88,15 +88,17 @@ class Goblin extends Entity {
 class Level1 extends Scene {
 	override public function new () {
 		super("Level1");
-		add(new Player(300, 100, 30, 60));
+		add(new Goblin(200, 200));
+		add(new Player(200, 200, 2, 2));
+		add(new Player(250, 250, 2, 2));
+		add(new Player(200, 250, 2, 2));
+		add(new Player(250, 200, 2, 2));
 	}
 }
 class Level2 extends Scene {
 	override public function new () {
 		super("Level2");
-		add(new Player(200, 200, 1, 1));
-		add(new Goblin(200, 200));
-		// add(new Player(200, 50, 30, 60));
+		add(new Player(200, 50, 30, 60));
 	}
 }
 class StartMenu extends Scene {
