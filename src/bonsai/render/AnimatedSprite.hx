@@ -2,25 +2,30 @@ package bonsai.render;
 
 typedef Animation = {
 	var frames: Array<Int>;
+	var spriteMap: bonsai.render.SpriteMap;
 }
 
 class AnimatedSprite {
 	var animations:Map<String, Animation>;
 	var playing:String;
 	var frame:Int;
-	var spriteMap:SpriteMap;
 
 	var frameTime = .1;
 	var timeUntilNextFrame = .1;
 
-	public function new (spriteMap:SpriteMap) {
-		this.spriteMap = spriteMap;
+	public function new () {
 		animations = new Map<String, Animation>();
 	}
 	public function registerAnimation (identifier:String, animation:Animation) {
 		animations.set(identifier, animation);
 	}
 	public function play (identifier:String) {
+		if (playing == identifier)
+			return;
+		if (!animations.exists(identifier)){
+			trace('Attempted to play animation $identifier, which isn\'t registered');
+			return;
+		}
 		playing = identifier;
 		frame = 0;
 		timeUntilNextFrame = frameTime;
@@ -36,7 +41,9 @@ class AnimatedSprite {
 	}
 	public function render (graphics:kha.graphics2.Graphics, x, y) {
 		var currentAnimation = animations.get(playing);
+		if (currentAnimation == null)
+			return;
 		var currentFrame = currentAnimation.frames[frame];
-		spriteMap.render(graphics, x, y, currentFrame);
+		currentAnimation.spriteMap.render(graphics, x, y, currentFrame);
 	}
 }

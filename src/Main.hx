@@ -7,6 +7,7 @@ import bonsai.render.AnimatedSprite;
 import bonsai.render.SpriteMap;
 import bonsai.render.Transformation;
 import bonsai.entity.ParticleSystem;
+import kha.input.KeyCode;
 
 class Main {
 	public static var engine:Engine;
@@ -20,6 +21,13 @@ class Main {
 		var scene1 = new Scene("Scene", engine);
 		engine.currentScene = new Level1(engine);
 	}
+}
+
+class InputBindings {
+	public static var left  = [KeyCode.Left,  KeyCode.A];
+	public static var right = [KeyCode.Right, KeyCode.D];
+	public static var up    = [KeyCode.Up,    KeyCode.W];
+	public static var down  = [KeyCode.Down,  KeyCode.S];
 }
 
 typedef RainParticle = {
@@ -67,22 +75,27 @@ class Player extends Entity {
 
 	public var width:Int = 16;
 	public var height:Int = 32;
-	var sprite:SpriteMap;
-	var walkingSpriteMap:SpriteMap;
 	var animation:AnimatedSprite;
 	var transformation:Transformation;
+	var input:bonsai.input.Input;
+	var facingRight = true;
 
-	override public function new (x, y) {
+	override public function new (x, y, input) {
 		super();
 		this.position.x = x;
 		this.position.y = y;
+		this.input = input;
 
-		this.sprite = new SpriteMap(kha.Assets.images.player, this.width, this.height);
-		this.walkingSpriteMap = new SpriteMap(kha.Assets.images.playerWalk, this.width, this.height);
-
-		this.animation = new AnimatedSprite(walkingSpriteMap);
-		this.animation.registerAnimation("walk", {frames:[0,1,2,3,4,5,6,7,8,9,10,11,12]});
-		this.animation.play("walk");
+		this.animation = new AnimatedSprite();
+		this.animation.registerAnimation("walk", {
+			spriteMap: new SpriteMap(kha.Assets.images.playerWalk, this.width, this.height),
+			frames:[0,1,2,3,4,5,6,7,8,9,10,11]
+		});
+		this.animation.registerAnimation("idle", {
+			spriteMap: new SpriteMap(kha.Assets.images.player, this.width, this.height),
+			frames:[0]
+		});
+		this.animation.play("idle");
 
 		this.transformation = new Transformation();
 		this.transformation.offset = new kha.math.Vector2(this.position.x, this.position.y);
@@ -90,14 +103,27 @@ class Player extends Entity {
 	}
 
 	override public function render (graphics:kha.graphics2.Graphics) {
+		this.transformation.offset = this.position;
+		transformation.scale.x = facingRight ? 1:-1;
 		this.transformation.apply(graphics);
 		this.animation.render(graphics, 0, 0);
-		// this.sprite.render(graphics, 0, 0, 1);
 		this.transformation.finish(graphics);
 	}
 
 	override public function update (dt:Float){
 		this.animation.update(dt);
+		super.update(dt);
+		if (input.isAnyKeyDown(InputBindings.right)){
+			this.position.x += dt * 28;
+			this.animation.play("walk");
+			facingRight = true;
+		} else if (input.isAnyKeyDown(InputBindings.left)){
+			this.position.x -= dt * 28;
+			this.animation.play("walk");
+			facingRight = false;
+		}else{
+			this.animation.play("idle");
+		}
 	}
 }
 
@@ -105,8 +131,6 @@ class Goblin extends Entity {
 
 	public var width:Int = 16;
 	public var height:Int = 16;
-	var sprite:SpriteMap;
-	var spriteMap:SpriteMap;
 	var animation:AnimatedSprite;
 	var transformation:Transformation;
 
@@ -115,12 +139,17 @@ class Goblin extends Entity {
 		this.position.x = x;
 		this.position.y = y;
 
-		this.sprite = new SpriteMap(kha.Assets.images.goblin, this.width, this.height);
-		this.spriteMap = new SpriteMap(kha.Assets.images.goblinRunSheet, this.width, this.height);
+		this.animation = new AnimatedSprite();
+		this.animation.registerAnimation("walk", {
+			spriteMap: new SpriteMap(kha.Assets.images.goblinRunSheet, this.width, this.height),
+			frames:[0,1,2,3,4,5]
+		});
 
-		this.animation = new AnimatedSprite(this.spriteMap);
-		this.animation.registerAnimation("walk", {frames:[0,1,2,3,4,5]});
-		this.animation.play("walk");
+		this.animation.registerAnimation("idle", {
+			spriteMap: new SpriteMap(kha.Assets.images.goblin, this.width, this.height),
+			frames:[0]
+		});
+		this.animation.play("idle");
 
 		this.transformation = new Transformation();
 		this.transformation.offset = new kha.math.Vector2(this.position.x, this.position.y);
@@ -131,7 +160,6 @@ class Goblin extends Entity {
 
 		this.transformation.apply(graphics);
 		this.animation.render(graphics, 0, 0);
-		// this.sprite.render(graphics, 0, 0, 1);
 		this.transformation.finish(graphics);
 	}
 
@@ -148,8 +176,8 @@ class Level1 extends Scene {
 		this.transformation = new Transformation();
 		this.transformation.scale = new kha.math.Vector2(8, 8);
 		add(new RainParticleSystem());
-		add(new Goblin(20, 20));
-		add(new Player(10, 20));
+		add(new Goblin(20, 46));
+		add(new Player(10, 30, engine.input));
 	}
 	override public function update (dt:Float) {
 		var dtMultiplier = engine.input.mouseInside ? 1 : .5;
@@ -164,7 +192,7 @@ class Level1 extends Scene {
 class Level2 extends Scene {
 	override public function new (engine) {
 		super("Level2", engine);
-		add(new Player(200, 50));
+		add(new Player(200, 50, engine.input));
 	}
 }
 class StartMenu extends Scene {
