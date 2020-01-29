@@ -2,6 +2,7 @@ let project = new Project('BonsaiGame');
 
 project.addSources('src');
 project.addAssets('assets/**');
+project.addLibrary('zui');
 
 if (process.argv.includes("--watch")) { // run only in watch mode
 	let libPath = project.addLibrary('hotml'); // client code for code-patching
