@@ -9,9 +9,9 @@ class Transformation {
 	public var origin:kha.math.Vector2;
 
 	public function new () {
-		offset = new kha.math.Vector2();
-		scale = new kha.math.Vector2();
-		origin = new kha.math.Vector2();
+		offset = new kha.math.Vector2(0, 0);
+		scale = new kha.math.Vector2(1, 1);
+		origin = new kha.math.Vector2(0, 0);
 	}
 
 	public function apply (graphics:kha.graphics2.Graphics) {

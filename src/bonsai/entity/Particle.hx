@@ -7,7 +7,7 @@ class Particle extends Entity {
 
 	override public function new (totalLife) {
 		this.totalLife = totalLife;
-
+		super();
 	}
 	inline public function isAlive () {
 		return consumedLife < totalLife;

@@ -1,16 +1,18 @@
 package bonsai.entity;
 
-class ParticleSystem extends EntityGroup {
+class ParticleSystem<ParticleType> extends Entity {
+	var members:Array<ParticleType>;
 	public var poolMaximum:Int;
-	override public function new (poolMaximum=200) {
+	var index = 0;
+	public function new (poolMaximum=300) {
+		this.members = new Array<ParticleType>();
 		this.poolMaximum = poolMaximum;
 		super();
 	}
-	public function spawnParticle(particle:Particle) {
-		if (members.length >= poolMaximum) {
-			this.members.shift();
-			this.members.push(particle);
-		}
-
+	public function spawnParticle(particle:ParticleType) {
+		members[index] = particle;
+		index++;
+		if (index > poolMaximum)
+			index = 0;
 	}
 }
