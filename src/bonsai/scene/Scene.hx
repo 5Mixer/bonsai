@@ -6,9 +6,11 @@ class Scene {
 	var layers:Array<Array<Entity>> = [];
 
 	public var name:String;
+	public var engine:bonsai.Engine;
 
-	public function new (?name:String) {
+	public function new (?name:String, engine:bonsai.Engine) {
 		this.name = name;
+		this.engine = engine;
 	}
 	public function add (entity:Entity, layer=0) {
 		if (this.layers[layer] == null)

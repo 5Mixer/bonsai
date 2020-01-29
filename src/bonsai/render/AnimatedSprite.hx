@@ -10,8 +10,8 @@ class AnimatedSprite {
 	var frame:Int;
 	var spriteMap:SpriteMap;
 
-	var lastFrameTime:Float = 0;
 	var frameTime = .1;
+	var timeUntilNextFrame = .1;
 
 	public function new (spriteMap:SpriteMap) {
 		this.spriteMap = spriteMap;
@@ -23,11 +23,12 @@ class AnimatedSprite {
 	public function play (identifier:String) {
 		playing = identifier;
 		frame = 0;
-		lastFrameTime = kha.Scheduler.time();
+		timeUntilNextFrame = frameTime;
 	}
-	public function update (dt) {
-		if (kha.Scheduler.time() > lastFrameTime + frameTime) {
-			lastFrameTime = kha.Scheduler.time();
+	public function update (dt:Float) {
+		timeUntilNextFrame -= dt;
+		if (timeUntilNextFrame <= 0) {
+			timeUntilNextFrame = frameTime;
 			frame += 1;
 			if (frame > animations.get(playing).frames.length - 1)
 				frame = 0;

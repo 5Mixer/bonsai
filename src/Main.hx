@@ -8,21 +8,17 @@ import bonsai.render.SpriteMap;
 import bonsai.render.Transformation;
 import bonsai.entity.ParticleSystem;
 
-enum GameEvents {
-	PlayerEat(food:String);
-}
-
 class Main {
-	public static var engine:Engine<GameEvents>;
+	public static var engine:Engine;
 	public static function main() {
 		#if hotml new hotml.client.Client(); #end
 
-		engine = new Engine<GameEvents>();
+		engine = new Engine();
 		engine.start(onAssetLoad);
 	}
 	public static function onAssetLoad () {
-		var scene1 = new Scene("Scene");
-		engine.currentScene = new Level1();
+		var scene1 = new Scene("Scene", engine);
+		engine.currentScene = new Level1(engine);
 	}
 }
 
@@ -31,8 +27,7 @@ typedef RainParticle = {
 	y: Float,
 	vx: Float,
 	vy: Float,
-	opacity: Float,
-	life: Int
+	opacity: Float
 }
 class RainParticleSystem extends ParticleSystem<RainParticle> {
 	override public function new () {
@@ -48,19 +43,23 @@ class RainParticleSystem extends ParticleSystem<RainParticle> {
 		graphics.color = kha.Color.White;
 		// super.render(graphics);
 	}
-	var f = 0;
+	var f = 0.;
+	var s = 0.;
 	override public function update (dt:Float) {
-		f++;
+		f += dt;
+		s += dt;
 		for (particle in members) {
-			particle.life++;
-			particle.x += particle.vx;
-			particle.y += particle.vy;
+			particle.x += particle.vx * dt;
+			particle.y += particle.vy * dt;
 		}
 
-		var rainLevel:Int = Math.floor(Math.max(0, 3 + Math.sin(f/200)*3));
+		var rainLevel:Int = Math.floor(Math.max(0, 3 + Math.sin(f)*3));
 
-		for (i in 0...rainLevel)
-			spawnParticle({ x: Math.round(Math.random() * 110) - 5, y: -1, vx: .3, vy: 2, life: 0, opacity: .2 + Math.random() * .8 });
+		if (s > .01) {
+			s = 0;
+			for (i in 0...rainLevel)
+				spawnParticle({ x: Math.round(Math.random() * 110) - 5, y: -1, vx: .3, vy: 100, opacity: .2 + Math.random() * .8 });
+		}
 	}
 }
 
@@ -97,7 +96,7 @@ class Player extends Entity {
 		this.transformation.finish(graphics);
 	}
 
-	override public function update (dt){
+	override public function update (dt:Float){
 		this.animation.update(dt);
 	}
 }
@@ -144,13 +143,17 @@ class Goblin extends Entity {
 class Level1 extends Scene {
 	var rain:RainParticleSystem;
 	var transformation:Transformation;
-	override public function new () {
-		super("Level1");
+	override public function new (engine) {
+		super("Level1",engine);
 		this.transformation = new Transformation();
 		this.transformation.scale = new kha.math.Vector2(8, 8);
 		add(new RainParticleSystem());
 		add(new Goblin(20, 20));
 		add(new Player(10, 20));
+	}
+	override public function update (dt:Float) {
+		var dtMultiplier = engine.input.mouseInside ? 1 : .5;
+		super.update(dt * dtMultiplier);
 	}
 	override public function render (g) {
 		transformation.apply(g);
@@ -159,14 +162,14 @@ class Level1 extends Scene {
 	}
 }
 class Level2 extends Scene {
-	override public function new () {
-		super("Level2");
+	override public function new (engine) {
+		super("Level2", engine);
 		add(new Player(200, 50));
 	}
 }
 class StartMenu extends Scene {
-	override public function new () {
-		super("Start Menu");
+	override public function new (engine) {
+		super("Start Menu", engine);
 	}
 }
 
