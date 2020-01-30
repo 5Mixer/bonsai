@@ -58,5 +58,9 @@ class Player extends Entity {
 		}else{
 			this.animation.play("idle");
 		}
+		if (input.isAnyKeyDown(InputBindings.punch)){
+			// this.scene.SCENEELEMENTTHATSPAWNSPUNCHPARTICLES.spawnPunchParticles(this.position.x + this.width/2, this.position.y + this.height/2, this.facingRight);
+			trace("POW!!!");
+		}
 	}
 }

@@ -23,6 +23,7 @@ class InputBindings {
 	public static var right = [KeyCode.Right, KeyCode.D];
 	public static var up    = [KeyCode.Up,    KeyCode.W];
 	public static var down  = [KeyCode.Down,  KeyCode.S];
+	public static var punch  = [KeyCode.P];
 }
 
 class Level2 extends bonsai.scene.Scene {

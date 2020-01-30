@@ -23,7 +23,6 @@ class RainParticleSystem extends ParticleSystem<RainParticle> {
 		}
 		graphics.opacity = 1;
 		graphics.color = kha.Color.White;
-		// super.render(graphics);
 	}
 	var f = 0.;
 	var s = 0.;
