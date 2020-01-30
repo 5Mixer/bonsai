@@ -18,7 +18,8 @@ class Engine {
 	public var debugInterface:Zui;
 
 	public function new () {
-	}
+
+	}	
 
 	public function start (title:String="Bonsai Engine Game", width=800, height=600, onReady) {
 		System.start({title: title, width: width, height: height}, function (_) {
